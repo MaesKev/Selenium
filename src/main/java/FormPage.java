@@ -2,6 +2,7 @@ import dev.failsafe.internal.util.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 public class FormPage {
 
@@ -16,6 +17,10 @@ public class FormPage {
     By cellphoneInput = By.id("userNumber");
     By submitButton = By.id("submit");
     By resultModal = By.cssSelector("div.modal-body");
+    By datepicker = By.id("dateOfBirthInput");
+    By datepickerMonth = By.cssSelector("select.react-datepicker__month-select");
+    By datepickerYear = By.cssSelector("select.react-datepicker__year-select");
+    By datepickerDays = By.cs("div.react-datepicker__day");
 
     public FormPage(WebDriver driver) {
         this.driver = driver;
@@ -62,7 +67,20 @@ public class FormPage {
         return this;
     }
 
-    public boolean submitIsSuccesful() {
+    public FormPage enterDate(String day, String month, String year) {
+        driver.findElement(datepicker).click();
+        WebElement selectMonth = driver.findElement(datepickerMonth);
+        Select selectObjectMonth = new Select(selectMonth);
+        selectObjectMonth.selectByVisibleText(month);
+        WebElement selectYear = driver.findElement(datepickerYear);
+        Select selectObjectYear = new Select(selectYear);
+        selectObjectYear.selectByVisibleText(year);
+
+        //TODO fill in day as well
+        return this;
+    }
+
+    public boolean submitIsSuccessful() {
         return driver.findElement(resultModal).isDisplayed();
     }
 }

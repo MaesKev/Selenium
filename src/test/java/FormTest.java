@@ -24,15 +24,16 @@ public class FormTest {
     }
 
     @Test
-    public void fillInForm() {
+    public void submitValidFormShouldTriggerPopUp() throws InterruptedException {
         page.navigateTo()
                 .enterFullName("Kevin", "Maes")
                 .enterEmail("kevin.maes@bignited.be")
                 .selectGender("Male")
+                .enterDate("12", "May", "2020")
                 .enterCellphoneNumber("0496703400")
                 .submit();
 
-        Boolean isDisplayed = page.submitIsSuccesful();
+        Boolean isDisplayed = page.submitIsSuccessful();
         Assert.assertEquals(true, isDisplayed);
     }
 }
